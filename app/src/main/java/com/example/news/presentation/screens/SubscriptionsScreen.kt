@@ -3,6 +3,7 @@ package com.example.news.presentation.screens
 import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +19,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -30,6 +32,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -95,8 +98,19 @@ fun SubscriptionsScreen(
                     },
                     singleLine = true
                 )
-                ButtonSubscribe(isButtonEnabled = state.isFindEnabled) { viewModel.processCommand(SubscriptionsCommand.ClickFind)}
-
+                Row(
+                    Modifier.padding(vertical = 16.dp)
+                ){
+                    ButtonFind(isButtonEnabled = state.isFindEnabled) {
+                        viewModel.processCommand(
+                            SubscriptionsCommand.ClickFind
+                        )
+                    }
+                    if (state.isLoading){
+                        Spacer(Modifier.size(16.dp))
+                        CircularProgressIndicator()
+                    }
+                }
             }
 
             if (state.articles.isNotEmpty()) {
@@ -110,7 +124,7 @@ fun SubscriptionsScreen(
                 item {
                     val articlesCount = state.articles.size
                     Text(
-                        text = "Subscriptions ($articlesCount):",
+                        text = "Found ($articlesCount):",
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp
                     )
@@ -127,7 +141,16 @@ fun SubscriptionsScreen(
                     )
                 }
             } else {
+                item {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
 
+                        Text(
+                            text = "Result is empty"
+                        )
+                    }
+                }
             }
         }
     }
@@ -135,7 +158,7 @@ fun SubscriptionsScreen(
 
 
 @Composable
-fun ButtonSubscribe(
+fun ButtonFind(
     modifier: Modifier = Modifier,
     isButtonEnabled: Boolean,
     onClick: () -> Unit,
@@ -150,11 +173,11 @@ fun ButtonSubscribe(
         )
     ) {
         Icon(
-            painter = painterResource(R.drawable.add_24px),
+            painter = painterResource(R.drawable.search_24px),
             contentDescription = "add subscription"
         )
         Text(
-            text = "Subscribe"
+            text = "Find"
         )
     }
 }

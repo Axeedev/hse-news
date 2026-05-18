@@ -62,35 +62,20 @@ dependencies {
 
     implementation(platform("com.squareup.okhttp3:okhttp-bom:5.3.0"))
 
-    // define any required OkHttp artifacts without version
     implementation("com.squareup.okhttp3:okhttp")
     implementation("com.squareup.okhttp3:logging-interceptor")
     implementation("androidx.datastore:datastore-preferences:1.2.1")
 
-    //hilt
     implementation("androidx.hilt:hilt-navigation-compose:1.3.0")
     implementation("com.google.dagger:hilt-android:2.59.2")
     ksp("com.google.dagger:hilt-android-compiler:2.59.2")
 
-    //room
-    implementation("androidx.room:room-runtime:2.8.4")
-    implementation("androidx.room:room-ktx:2.8.4")
-    ksp("androidx.room:room-compiler:2.8.4")
-
-
-    implementation("androidx.hilt:hilt-work:1.3.0")
-    // When using Kotlin.
-    ksp("androidx.hilt:hilt-compiler:1.3.0")
-    // When using Java.
     implementation("androidx.work:work-runtime-ktx:2.11.2")
-    // define any required OkHttp artifacts without version
     implementation("com.squareup.okhttp3:okhttp")
-    //retrofit
     implementation ("com.squareup.retrofit2:retrofit:3.0.0")
     implementation("com.squareup.retrofit2:converter-kotlinx-serialization:3.0.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
 
-    //coil
     implementation("io.coil-kt.coil3:coil-compose:3.4.0")
     implementation("io.coil-kt.coil3:coil-network-okhttp:3.4.0")
 

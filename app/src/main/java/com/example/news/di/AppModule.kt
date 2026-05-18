@@ -1,7 +1,5 @@
 package com.example.news.di
 
-import android.content.Context
-import androidx.work.WorkManager
 import com.example.news.data.remote.ApiService
 import com.example.news.data.repository.NewsRepositoryImpl
 import com.example.news.domain.repository.NewsRepository
@@ -9,7 +7,6 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -38,11 +35,6 @@ interface AppModule {
                 ignoreUnknownKeys = true
                 coerceInputValues = true
             }
-        }
-        @Singleton
-        @Provides
-        fun provideWorkManager(@ApplicationContext context: Context): WorkManager{
-            return WorkManager.getInstance(context)
         }
 
         @Singleton

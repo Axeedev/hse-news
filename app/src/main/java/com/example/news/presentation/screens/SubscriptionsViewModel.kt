@@ -50,6 +50,7 @@ class SubscriptionsViewModel @Inject constructor(
         when(command){
             SubscriptionsCommand.ClickFind -> {
                 viewModelScope.launch {
+                    _state.update { it.copy(isLoading = true) }
                     val topic = _state.value.query
                     val result = repository.getArticles(topic)
                     when(result){
@@ -57,12 +58,16 @@ class SubscriptionsViewModel @Inject constructor(
 
                             errors.emit(Error(result.message))
 
+                            _state.update { it.copy(articles = listOf()) }
+
                         }
                         is Resource.Success<List<Article>> -> {
 
                             _state.update { it.copy(articles = result.data) }
                         }
                     }
+
+                    _state.update { it.copy(isLoading = false) }
                 }
             }
             is SubscriptionsCommand.InputTitle -> {
@@ -85,7 +90,8 @@ sealed interface SubscriptionsCommand{
 
 data class ScreenState(
     val query: String = "",
-    val articles: List<Article> = listOf()
+    val articles: List<Article> = listOf(),
+    val isLoading: Boolean = false
 ){
     val isFindEnabled: Boolean
         get() = query.isNotBlank()
